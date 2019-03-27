@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+<form method="post">
+  <label>
+    New To-do item:
+    <input type="text" name="todo" id="todo">
+  </label>
+
+  <label>
+    <input type="submit" value="item" name="" id="">
+  </label>
+</form>
+
+<ul>
+  {% for task in todo %}
+  <li>{{ task.job }} {{ task.timestamp }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
