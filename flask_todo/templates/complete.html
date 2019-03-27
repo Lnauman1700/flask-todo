@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %}Complete{% endblock %}
+
+{% block content %}
+<form method="post">
+  <label>
+    Complete this item:
+    <select>
+      {% for task in todo %}
+      <option value="{{task}}">{{task.job}}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    <input type="submit" value="complete" name="" id="">
+  </label>
+</form>
+{% endblock %}

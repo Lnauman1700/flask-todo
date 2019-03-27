@@ -36,5 +36,8 @@ def create_app(test_config=None):
         # if query param name matches name of todo item, display only todo item
         # if query param is completed, displays only completed items
 
+    @app.route('/complete', methods=['GET', 'POST'])
+    def complete():
+        return render_template('complete.html', todo=todo)
 
     return app
