@@ -3,20 +3,9 @@
 {% block title %}Todo List{% endblock %}
 
 {% block content %}
-<form method="post">
-  <label>
-    New To-do item:
-    <input type="text" name="todo" id="todo">
-  </label>
-
-  <label>
-    <input type="submit" value="Submit" name="" id="">
-  </label>
-</form>
-
 <ul>
-  {% for task in todo %}
-  <li>{{ task.job }} {{ task.timestamp }}</li>
+  {% for thing in todo %}
+  <li class="{{thing[3]}}">{{ thing[1] }} {{ thing[2] }}</li>
   {% endfor %}
 </ul>
 {% endblock %}
