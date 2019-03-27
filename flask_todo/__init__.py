@@ -50,6 +50,7 @@ def create_app(test_config=None):
                 """,
                 (new_item.job, new_item.timestamp, new_item.is_complete)
             )
+            db.commit()
             return render_template('add.html')
 
     @app.route('/complete', methods=['GET', 'POST'])
