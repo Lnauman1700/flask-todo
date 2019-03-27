@@ -5,9 +5,9 @@
 <form method="post">
   <label>
     Complete this item:
-    <select>
+    <select name="selector">
       {% for task in todo %}
-      <option value="{{task}}">{{task.job}}</option>
+      <option value="{{task[0]}}">{{task[1]}}</option>
       {% endfor %}
     </select>
   </label>

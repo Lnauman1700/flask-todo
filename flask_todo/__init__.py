@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 import psycopg2
 
 from . import items
@@ -39,22 +39,47 @@ def create_app(test_config=None):
 
     @app.route('/add', methods=['GET', 'POST'])
     def add():
+
         if request.method == 'GET':
             return render_template('add.html')
+
         elif request.method == 'POST':
             new_item = items.Item(request.form.get("todo"))
             cur = db.cursor()
+
             cur.execute("""
                 INSERT INTO todo_list (task, tstamp, is_completed)
                 VALUES (%s, %s, %s);
                 """,
                 (new_item.job, new_item.timestamp, new_item.is_complete)
             )
+
             db.commit()
+
             return render_template('add.html')
 
     @app.route('/complete', methods=['GET', 'POST'])
     def complete():
-        return render_template('complete.html', todo=todo)
+        if request.method == 'GET':
+            cur = db.cursor()
+
+            cur.execute("SELECT * FROM todo_list WHERE is_completed = false;")
+
+            return render_template('complete.html', todo=cur.fetchall())
+
+        elif request.method == 'POST':
+
+            postID = request.form.get("selector")
+            cur = db.cursor()
+
+            cur.execute("""
+                UPDATE todo_list SET is_completed = true
+                WHERE id = %s
+                """,
+                (postID)
+            )
+            db.commit()
+            
+            return redirect('/')
 
     return app
