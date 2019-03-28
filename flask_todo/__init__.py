@@ -23,24 +23,23 @@ def create_app(test_config=None):
 
     @app.route('/', methods=['GET'])
     def index():
-        # in handler, we'll have to probably make a list for now so to-do items stay over multiple post requests
 
-        # takes query parameters
-        # todo_item = request.args.get('todo', 'none')
-        # display regular todo list if no query parameter
+        query = request.args.get('q')
+
         conn = db.get_db()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM todo_list;")
+
+        if query == 'completed':
+            cur.execute("SELECT * FROM todo_list WHERE is_completed = true;")
+        elif query == 'active':
+            cur.execute("SELECT * FROM todo_list WHERE is_completed = false;")
+        else:
+            cur.execute("SELECT * FROM todo_list;")
+            
         todo = cur.fetchall()
 
         return render_template('index.html', todo=todo)
 
-        #todo.append(items.Item(request.form.get("todo")))
-        #return render_template('index.html', todo=todo)
-        # if todo_item = 'none':
-        # return return_template('index.html')
-        # if query param name matches name of todo item, display only todo item
-        # if query param is completed, displays only completed items
 
     @app.route('/add', methods=['GET', 'POST'])
     def add():
