@@ -55,6 +55,7 @@ def create_app(test_config=None):
             )
 
             db.commit()
+            
 
             return render_template('add.html')
 
@@ -79,7 +80,7 @@ def create_app(test_config=None):
                 (postID)
             )
             db.commit()
-            
+
             return redirect('/')
 
     return app
